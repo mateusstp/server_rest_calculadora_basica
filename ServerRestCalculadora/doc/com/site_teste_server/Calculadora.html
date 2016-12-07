@@ -1,0 +1,133 @@
+
+<html>
+    <head>
+        <style type="text/css">
+            @import url("estilo.css");
+        </style>    
+       <title>Calculadora - Operações Básicas</title>
+    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+     <script type="text/javascript">
+     $(document).ready(function() {
+
+        var GET  = "/ServerRestCalculadora/rest/api/calc/server_op/get"
+        var POST = "/ServerRestCalculadora/rest/api/calc/server_op/post"
+
+        $("#testeServidor").click(function(){
+            var HOST =  $("#hostAddr").val();
+            var URL = HOST.concat(GET);
+            $(function(){
+                     $.getJSON(URL, function(data) {
+                        var jsonOP = JSON.stringify(data);
+                        var msg = 'Sucesso na conexão! Resultado: '.concat(jsonOP);
+                        alert(msg)
+                    })
+                    .fail(function() {
+                       alert('Falha na conexão!');
+                    });
+
+                });  
+       }); 
+        
+        $("#soma").click(         function(){ executaOperacaoPOST('+'); }); 
+
+        $("#subtracao").click(    function(){ executaOperacaoPOST('-'); }); 
+
+        $("#multiplicacao").click(function(){ executaOperacaoPOST('*'); });
+
+        $("#divisao").click(      function(){ executaOperacaoPOST('/'); });
+
+        function executaOperacaoPOST(operacao) {
+            $('#resultado').val("0.0"   );
+            var HOST =  $("#hostAddr").val();
+            var URL = HOST.concat(POST);
+            
+            var stringOP = { resultado:$("#resultado").val(), operador:operacao, a: $("#a").val(),b:$("#b").val()};
+            var jsonOP = JSON.stringify(stringOP);
+
+             $.ajax({
+                    url: URL,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: jsonOP,
+                    success: function (result) {
+                        var opJSON = result;
+                        $('#resultado').val(opJSON.resultado);
+                        $('#operador').val(opJSON.operador);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    var msg = 'Falha na conexão! Status: ';
+                    msg = msg.concat(xhr.status);
+                    msg = msg.concat('. Execção: ');
+                    msg = msg.concat(thrownError);
+                    msg = msg.concat('.');
+                    alert(msg);
+                    }
+                });
+        }
+
+    });
+    
+      
+    </script>
+    </head>
+    
+    <body>
+        <div class="element">
+              <form name="host" id="host">
+                <table>
+                    <tr> 
+                        <td>Endereço e porta do servidor (exemplo: http://192.168.0.21:8080) : </td>
+                    </tr>
+                    <tr> 
+                        <td><input type="text" size=55 name="hostAddr" id="hostAddr" value="http://:8080" /></td>
+                   </tr>
+                   <tr>
+                        <td><input type="button" value="Testar conexão" name="testeServidor" id="testeServidor"/></td>
+                        
+                    </tr>
+
+                </table>
+            </form>
+        </div> 
+            
+        <div class="elementCalc">
+            Operação: A op B<br></br>
+            <form name="operacao" id="operacao" method="post">
+                <table>
+                    <tr> 
+                        <td>Valor A:</td>
+                        <td><input type="number" name="a" id="a" value="0.0" /></td>
+                    </tr>
+                    <tr> 
+                        <td>Valor B:</td>
+                        <td><input type="number" name="b" id="b" value="0.0"/></td>
+                    </tr>
+                    <tr> 
+                        <td>Operador:</td>
+                        <td><input type="text" name="operador" id="operador" value="+" disabled/></td>
+                    </tr>
+                    <tr> 
+                        <td>Resultado:</td>
+                        <td> <input type="number" name="resultado" id="resultado" value="0.0" disabled/></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+
+        <div class="elementOP">
+             <br></br>
+             <form name="operacao" id="operacao" method="post">
+                <table>
+                    <tr>
+                        <td><input type="button" value="+" name="soma" id="soma"/></td>
+                        <td><input type="button" value="-" name="subtracao" id="subtracao"/></td>
+                        <td><input type="button" value="*" name="multiplicacao" id="multiplicacao"/></td>
+                        <td><input type="button" value="/" name="divisao" id="divisao"/></td>
+                    </tr>
+                </table>
+        </form>
+        </div>
+    </body>
+</html>

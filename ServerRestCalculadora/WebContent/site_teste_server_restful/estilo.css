@@ -1,0 +1,69 @@
+body, html {
+    height:100%;
+}
+
+.content {
+    display: table;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.area {
+    display: table-cell;
+    vertical-align: middle;
+    height:100%;
+}
+.form_envia {
+    background: #EDEFF1;
+    padding: 30px 100px;
+    width: 336px;
+    height: 395px;
+}
+
+.element {
+    display: block;
+    position: absolute;
+    padding: 3px 3px;
+    z-index: 99999; 
+    height: 58px;
+    left: 45%;
+    margin: -200px 0 0 -200px;/*
+                Respectivamente altura e largura, para resultado
+                divida por 2, altura e largura funciona no IE 6.+
+                Chrome, FF 1.5 +, Safari, etc...*/
+    position: absolute;
+    top: 50%;
+    width: 151px;
+}
+
+.elementCalc {
+    display: block;
+    position: absolute;
+    padding: 3px 3px;
+    z-index: 99999; 
+    height: 58px;
+    left: 50%;
+    margin: -150px 0 0 -200px;/*
+                Respectivamente altura e largura, para resultado
+                divida por 2, altura e largura funciona no IE 6.+
+                Chrome, FF 1.5 +, Safari, etc...*/
+    position: absolute;
+    top: 55%;
+    width: 151px;
+}
+
+.elementOp {
+    display: block;
+    position: absolute;
+    padding: 3px 3px;
+    z-index: 99999; 
+    height: 58px;
+    left: 57%;
+    margin: -150px 0 0 -200px;/*
+                Respectivamente altura e largura, para resultado
+                divida por 2, altura e largura funciona no IE 6.+
+                Chrome, FF 1.5 +, Safari, etc...*/
+    position: absolute;
+    top: 71%;
+    width: 151px;
+}
